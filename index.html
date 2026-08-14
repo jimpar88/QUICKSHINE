@@ -305,6 +305,14 @@
   .radio-pill input:checked + span{background:var(--blue);border-color:var(--blue);color:#fff;}
   .radio-pill input:focus-visible + span{outline:2px solid var(--blue);outline-offset:2px;}
   .hint{font-size:.78rem;color:var(--text-dim);margin-top:-10px;margin-bottom:18px;}
+  .coverage-check{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .coverage-check .btn{padding:9px 16px;font-size:.78rem;}
+  .geo-result{font-size:.82rem;color:var(--text-dim);}
+  .geo-result.ok{color:#1a7f4b;font-weight:700;}
+  .geo-result.warn{color:var(--mango-dark);font-weight:700;}
+  .estimate-box{margin:-8px 0 20px;padding:14px 16px;background:var(--pearl);border:1px solid var(--mist);
+    border-left:3px solid var(--blue);font-size:.85rem;color:var(--text);line-height:1.6;}
+  .estimate-box b{color:var(--navy);}
   .submit-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:8px;}
   #confirm-summary{
     display:none;margin-top:18px;padding:16px 18px;background:var(--pearl);border:1px solid var(--mist);
@@ -422,7 +430,7 @@
 
 <div class="utility">
   <div class="wrap">
-    <span>Av. Boyacá # 63&#8209;6, Local 6</span>
+    <span>Carrera 71C # 53A&#8209;20</span>
     <span>Lun–Vie 9:00–19:00 · Sáb 9:00–14:00</span>
     <a href="https://wa.me/573134542027" target="_blank" rel="noopener">+57 313 454 2027</a>
   </div>
@@ -505,7 +513,7 @@
 
   <div class="manifest">
     <div class="wrap">
-      <span class="item">Av. Boyacá #63&#8209;6, <b>Local 6</b></span>
+      <span class="item">Carrera 71C #53A&#8209;20</span>
       <span class="item">Lun–Vie <b>9:00–19:00</b> · Sáb <b>9:00–14:00</b></span>
       <span class="item">IG / TikTok <b>@quick.shineoficial</b></span>
       <span class="item"><b>+57 313 454 2027</b></span>
@@ -659,7 +667,7 @@
         <p class="eyebrow">Visítanos</p>
         <h2 style="font-size:clamp(1.7rem,3vw,2.3rem);margin-top:12px;">El local</h2>
         <div class="ticket" style="margin-top:24px;">
-          <div class="row"><span class="k">Dirección</span><span class="v"><b>Av. Boyacá # 63&#8209;6</b>Local 6</span></div>
+          <div class="row"><span class="k">Dirección</span><span class="v"><b>Carrera 71C # 53A&#8209;20</b></span></div>
           <div class="row"><span class="k">Lun – Vie</span><span class="v"><b>9:00 am – 7:00 pm</b></span></div>
           <div class="row"><span class="k">Sábado</span><span class="v"><b>9:00 am – 2:00 pm</b></span></div>
           <div class="row"><span class="k">WhatsApp</span><span class="v"><b>+57 313 454 2027</b></span></div>
@@ -711,7 +719,7 @@
     <div>
       <h5>Contacto</h5>
       <ul>
-        <li>Av. Boyacá # 63&#8209;6, Local 6</li>
+        <li>Carrera 71C # 53A&#8209;20</li>
         <li>Lun–Vie 9:00–19:00</li>
         <li>Sáb 9:00–14:00</li>
         <li><a href="https://wa.me/573134542027" target="_blank" rel="noopener">+57 313 454 2027</a></li>
@@ -742,7 +750,7 @@
 
 <div class="utility">
   <div class="wrap">
-    <span>Av. Boyacá # 63&#8209;6, Local 6</span>
+    <span>Carrera 71C # 53A&#8209;20</span>
     <span>Lun–Vie 9:00–19:00 · Sáb 9:00–14:00</span>
     <a href="https://wa.me/573134542027" target="_blank" rel="noopener">+57 313 454 2027</a>
   </div>
@@ -804,9 +812,17 @@
         <input id="f-referencia" name="referencia" type="text" placeholder="Ej. Chapinero, portería azul, torre 3">
       </div>
 
+      <div class="field">
+        <label>Cobertura (radio de 5 km)</label>
+        <div class="coverage-check">
+          <button type="button" class="btn btn-ghost" id="btn-geo">📍 Verificar mi ubicación</button>
+          <span id="geo-result" class="geo-result">Opcional — confirma si estás dentro del radio de domicilios.</span>
+        </div>
+      </div>
+
       <div class="field-row">
         <div class="field">
-          <label for="f-dia">Día</label>
+          <label for="f-dia">Día (solo martes o jueves)</label>
           <input id="f-dia" name="dia" type="date" required>
         </div>
         <div class="field">
@@ -816,7 +832,8 @@
           </select>
         </div>
       </div>
-      <p class="hint" id="f-hint">Domicilios de lunes a viernes 9:00 am–7:00 pm y sábados 9:00 am–2:00 pm. Cerrado domingos.</p>
+      <p class="hint" id="f-hint">Domicilios solo martes y jueves, 9:00 am–7:00 pm. No aplica fines de semana ni festivos.</p>
+      <div id="estimate-box" class="estimate-box" style="display:none;"></div>
 
       <div class="field-row">
         <div class="field">
@@ -846,14 +863,19 @@
       <div class="rail-item">
         <h4>Horario de domicilios</h4>
         <table class="hours-table">
-          <tr><td>Lunes – Viernes</td><td>9:00 am – 7:00 pm</td></tr>
-          <tr><td>Sábado</td><td>9:00 am – 2:00 pm</td></tr>
-          <tr><td>Domingo</td><td>Cerrado</td></tr>
+          <tr><td>Martes</td><td>9:00 am – 7:00 pm</td></tr>
+          <tr><td>Jueves</td><td>9:00 am – 7:00 pm</td></tr>
+          <tr><td>Otros días</td><td>Sin domicilio</td></tr>
         </table>
+        <p style="font-size:.78rem;color:var(--text-dim);margin-top:10px;">Domicilios solo martes y jueves. Cualquier otro día puedes traer o recoger tu par directamente en el local.</p>
+      </div>
+      <div class="rail-item">
+        <h4>Tiempo de entrega</h4>
+        <p>Tu calzado entra a lavado un día después de la recogida. El proceso toma hasta <b>5 días hábiles</b> según la complejidad del par — no cuenta fines de semana ni festivos.</p>
       </div>
       <div class="rail-item">
         <h4>Zona de cobertura</h4>
-        <p>Recogida y entrega en Bogotá, cerca de Av. Boyacá # 63-6. Si estás más lejos, escríbenos y confirmamos cobertura.</p>
+        <p>Recogida y entrega dentro de un radio de 5 km alrededor de Carrera 71C # 53A-20, Bogotá. Verifica tu cobertura en el formulario.</p>
       </div>
       <div class="rail-item">
         <h4>¿Prefieres traerlo tú mismo?</h4>
@@ -905,44 +927,110 @@
   window.addEventListener('hashchange', routeFromHash);
   routeFromHash();
 
-  // ---- horario dinámico según día seleccionado ----
+  // ---- horario dinámico: domicilios solo martes y jueves ----
   var diaInput = document.getElementById('f-dia');
   var horarioSelect = document.getElementById('f-horario');
   var hint = document.getElementById('f-hint');
+  var estimateBox = document.getElementById('estimate-box');
 
   var todayStr = new Date().toISOString().slice(0,10);
   diaInput.min = todayStr;
 
-  var SLOTS_SEMANA = ["09:00–10:30","10:30–12:00","12:00–13:30","13:30–15:00","15:00–16:30","16:30–18:00","18:00–19:00"];
-  var SLOTS_SABADO = ["09:00–10:30","10:30–12:00","12:00–14:00"];
+  var SLOTS_DOMICILIO = ["09:00–10:30","10:30–12:00","12:00–13:30","13:30–15:00","15:00–16:30","16:30–18:00","18:00–19:00"];
+  var DIAS_VALIDOS = [2, 4]; // 2 = martes, 4 = jueves
+
+  function addBusinessDays(date, days){
+    var d = new Date(date.getTime());
+    var added = 0;
+    while(added < days){
+      d.setDate(d.getDate() + 1);
+      var wd = d.getDay();
+      if(wd !== 0 && wd !== 6) added++;
+    }
+    return d;
+  }
+  function formatFecha(d){
+    return d.toLocaleDateString('es-CO', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  }
 
   function updateSlots(){
     var val = diaInput.value;
     horarioSelect.innerHTML = '';
+    estimateBox.style.display = 'none';
+    hint.style.color = '';
+
     if(!val){
       horarioSelect.innerHTML = '<option value="">Elige un día primero</option>';
+      hint.textContent = 'Domicilios solo martes y jueves, 9:00 am–7:00 pm. No aplica fines de semana ni festivos.';
       return;
     }
     var d = new Date(val + 'T00:00:00');
-    var day = d.getDay(); // 0 domingo ... 6 sábado
-    var slots = day === 0 ? [] : (day === 6 ? SLOTS_SABADO : SLOTS_SEMANA);
+    var day = d.getDay();
 
-    if(slots.length === 0){
-      horarioSelect.innerHTML = '<option value="">Cerrado los domingos</option>';
-      hint.textContent = 'Los domingos no hay domicilios disponibles — elige otro día.';
+    if(DIAS_VALIDOS.indexOf(day) === -1){
+      horarioSelect.innerHTML = '<option value="">Elige martes o jueves</option>';
+      hint.style.color = 'var(--mango-dark)';
+      hint.textContent = 'Los domicilios son solo los días martes y jueves — por favor elige uno de esos días.';
       return;
     }
-    hint.textContent = day === 6
-      ? 'Sábado: domicilios entre 9:00 am y 2:00 pm.'
-      : 'Entre semana: domicilios entre 9:00 am y 7:00 pm.';
-    slots.forEach(function(s){
+
+    hint.textContent = 'Domicilios ese día entre 9:00 am y 7:00 pm.';
+    SLOTS_DOMICILIO.forEach(function(s){
       var opt = document.createElement('option');
       opt.value = s; opt.textContent = s;
       horarioSelect.appendChild(opt);
     });
+
+    var entraLavado = new Date(d.getTime());
+    entraLavado.setDate(entraLavado.getDate() + 1);
+    var listo = addBusinessDays(entraLavado, 5);
+    estimateBox.style.display = 'block';
+    estimateBox.innerHTML = 'Tu calzado entra a lavado el <b>' + formatFecha(entraLavado) + '</b>. ' +
+      'Listo en un estimado de 5 días hábiles — alrededor del <b>' + formatFecha(listo) + '</b> ' +
+      '(puede variar según la complejidad del par; no cuenta fines de semana ni festivos).';
   }
   diaInput.addEventListener('change', updateSlots);
   updateSlots();
+
+  // ---- verificación de cobertura (radio de 5 km) ----
+  var SHOP_LAT = 4.668;   // aproximado: Carrera 71C # 53A-20, Bogotá
+  var SHOP_LNG = -74.098;
+  var MAX_KM = 5;
+
+  function haversineKm(lat1, lon1, lat2, lon2){
+    var R = 6371;
+    var dLat = (lat2 - lat1) * Math.PI / 180;
+    var dLon = (lon2 - lon1) * Math.PI / 180;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+  }
+
+  var geoBtn = document.getElementById('btn-geo');
+  var geoResult = document.getElementById('geo-result');
+  geoBtn.addEventListener('click', function(){
+    if(!navigator.geolocation){
+      geoResult.textContent = 'Tu navegador no permite ubicación automática. Escríbenos por WhatsApp y confirmamos.';
+      geoResult.className = 'geo-result warn';
+      return;
+    }
+    geoResult.textContent = 'Ubicando...';
+    geoResult.className = 'geo-result';
+    navigator.geolocation.getCurrentPosition(function(pos){
+      var km = haversineKm(pos.coords.latitude, pos.coords.longitude, SHOP_LAT, SHOP_LNG);
+      if(km <= MAX_KM){
+        geoResult.textContent = '✓ Estás a ' + km.toFixed(1) + ' km del local — dentro de cobertura.';
+        geoResult.className = 'geo-result ok';
+      } else {
+        geoResult.textContent = '✗ Estás a ' + km.toFixed(1) + ' km del local — fuera del radio de 5 km. Escríbenos y confirmamos si aplica.';
+        geoResult.className = 'geo-result warn';
+      }
+    }, function(){
+      geoResult.textContent = 'No pudimos acceder a tu ubicación. Actívala en el navegador o escríbenos por WhatsApp.';
+      geoResult.className = 'geo-result warn';
+    });
+  });
 
   // ---- envío -> arma mensaje de WhatsApp ----
   var form = document.getElementById('booking-form');
@@ -966,7 +1054,17 @@
       return;
     }
 
-    var fecha = new Date(dia + 'T00:00:00').toLocaleDateString('es-CO', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    var diaObj = new Date(dia + 'T00:00:00');
+    if(DIAS_VALIDOS.indexOf(diaObj.getDay()) === -1){
+      hint.style.color = 'var(--mango-dark)';
+      hint.textContent = 'Los domicilios son solo los días martes y jueves — por favor elige uno de esos días.';
+      return;
+    }
+
+    var fecha = formatFecha(diaObj);
+    var entraLavado = new Date(diaObj.getTime());
+    entraLavado.setDate(entraLavado.getDate() + 1);
+    var listo = addBusinessDays(entraLavado, 5);
 
     var lines = [
       'Hola Quick Shine! Quiero agendar un domicilio:',
@@ -977,6 +1075,7 @@
       'Horario: ' + horario,
       'Nombre: ' + nombre,
       'Teléfono: ' + telefono,
+      'Entrega estimada: ' + formatFecha(listo) + ' (aprox., según complejidad)',
     ];
     if(notas) lines.push('Notas: ' + notas);
 
